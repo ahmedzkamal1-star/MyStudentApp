@@ -12,13 +12,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Get Buildozer Docker Image
-        run: docker pull kivy/buildozer
-
+      # استخدام آكشن مخصص لبناء تطبيقات Kivy هو الأكثر استقراراً وموثوقية
       - name: Build with Buildozer
-        run: |
-          docker run --rm -v $(pwd):/home/user/hostdir kivy/buildozer --version
-          docker run --rm -v $(pwd):/home/user/hostdir kivy/buildozer -v android debug
+        uses: ArtemSBulgakov/buildozer-action@v1
+        with:
+          buildozer_version: master
+          python_version: 3.11
 
       - name: Upload APK
         uses: actions/upload-artifact@v3
