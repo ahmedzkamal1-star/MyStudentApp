@@ -10,6 +10,9 @@ package.name = mystudent
 # (str) Package domain (needed for android packaging)
 package.domain = org.mystudent.app
 
+# (str) Application version
+version = 1.0.0
+
 # (str) Source code where the main.py live
 source.dir = .
 
