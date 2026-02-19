@@ -49,6 +49,9 @@ orientation = portrait
 # (str) Presplash of the application
 # presplash.filename = %(source.dir)s/assets/splash.png
 
+# (bool) If True, then skip the acknowledgement of the Android SDK license
+android.accept_sdk_license = True
+
 [buildozer]
 
 # (int) Log level (0 = error only, 1 = info, 2 = debug (with command output))
