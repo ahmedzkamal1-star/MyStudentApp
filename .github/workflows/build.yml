@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       # استخدام آكشن مخصص لبناء تطبيقات Kivy هو الأكثر استقراراً وموثوقية
       - name: Build with Buildozer
@@ -20,7 +20,7 @@ jobs:
           python_version: 3.11
 
       - name: Upload APK
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: mystudent-apk
           path: bin/*.apk
