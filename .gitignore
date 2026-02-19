@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+
+# Kivy / Buildozer
+.buildozer/
+bin/
+*.spec
+# Note: we want to keep buildozer.spec but ignore .buildozer folder
+
+# Local DB
+local_db.json
+theme_pref.txt
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo

@@ -47,13 +47,19 @@ if platform == 'android':
 try:
     from kivy.core.text import LabelBase
     import os
-    # استخدام خط يدعم العربية من النظام لضمان التوافق
-    arial_path = "C:\\Windows\\Fonts\\arial.ttf"
-    if os.path.exists(arial_path):
-        LabelBase.register(name='ArabicFont', fn_regular=arial_path)
+    
+    # مسار الخط المدمج في التطبيق (أندرويد + ويندوز)
+    font_path = os.path.join(os.path.dirname(__file__), 'assets', 'fonts', 'font.ttf')
+    
+    if os.path.exists(font_path):
+        LabelBase.register(name='ArabicFont', fn_regular=font_path)
     else:
-        # إذا لم يوجد، نعتمد على الخط الافتراضي مع التنبيه
-        print("Warning: arial.ttf not found")
+        # محاولة البحث عن خط نظام بديل في أندرويد إذا لم يوجد المدمج
+        fallback_path = "/system/fonts/DroidSansArabic.ttf"
+        if os.path.exists(fallback_path):
+            LabelBase.register(name='ArabicFont', fn_regular=fallback_path)
+        else:
+            print("Warning: No Arabic font found. Please add font.ttf to assets/fonts/")
 except Exception as e:
     print(f"Font registration failed: {e}")
 
