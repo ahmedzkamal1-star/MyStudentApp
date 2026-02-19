@@ -1,0 +1,24 @@
+{
+    "students": {
+        "231266": {
+            "name": "ahmed kamal",
+            "password": "123456",
+            "materials": []
+        }
+    },
+    "pending_requests": {},
+    "active_sessions": {
+        "1001": {
+            "name": "أحمد علي",
+            "login_time": "2026-02-19 20:24:24"
+        }
+    },
+    "pdfs": {},
+    "announcements": [
+        {
+            "id": "ann_1771525400",
+            "text": "مرحبا بكم في البرنامج",
+            "time": "2026-02-19 20:23"
+        }
+    ]
+}

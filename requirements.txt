@@ -1,0 +1,7 @@
+# requirements.txt
+kivy==2.2.1
+kivymd==1.1.1
+pillow==10.1.0
+requests
+# For Android build:
+# buildozer==1.5.0

@@ -1,0 +1,73 @@
+#:import get_color_from_hex kivy.utils.get_color_from_hex
+#:import LabelBase kivy.core.text.LabelBase
+#:import Animation kivy.animation.Animation
+
+# assets/styles.kv
+# Custom styles and themes for the app
+
+<Label>:
+    font_name: app.font_name
+
+<Button>:
+    font_name: app.font_name
+
+<FeatureCard>:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [15, 15, 15, 15]
+        # Gradient background
+        Color:
+            rgba: 0.42, 0.36, 0.91, 1  # Fallback color
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [15, 15, 15, 15]
+    
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint_y: 1  # Changed from 0.3 to fill the card
+        spacing: dp(10)
+        padding: dp(10)
+        
+        Label:
+            text: root.icon
+            font_size: dp(30)
+            size_hint_x: 0.2
+        
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_x: 0.8
+            spacing: dp(5)
+            
+            Label:
+                text: root.title
+                font_size: dp(18)
+                bold: True
+                color: get_color_from_hex('#FFFFFF')
+                halign: 'left'
+                text_size: self.size
+                valign: 'middle'
+            
+            Label:
+                text: root.description
+                font_size: dp(12)
+                color: get_color_from_hex('#F0F0F0')
+                halign: 'left'
+                text_size: self.size
+                valign: 'middle'
+
+# Animation definitions
+<Screen>:
+    opacity: 1
+    # transition is handled in ScreenManager
+
+<Button>:
+    on_press:
+        # Simple feedback
+        self.opacity = 0.7
+    on_release:
+        self.opacity = 1
