@@ -1,0 +1,27 @@
+name: Build APK
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Get Buildozer Docker Image
+        run: docker pull kivy/buildozer
+
+      - name: Build with Buildozer
+        run: |
+          docker run --rm -v $(pwd):/home/user/hostdir kivy/buildozer --version
+          docker run --rm -v $(pwd):/home/user/hostdir kivy/buildozer -v android debug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: mystudent-apk
+          path: bin/*.apk
