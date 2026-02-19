@@ -229,6 +229,8 @@ class FirebaseManager:
         return False
 
     @staticmethod
+    def set_session(code, name): pass
+    @staticmethod
     def remove_session(code): pass
     @staticmethod
     def get_active_sessions(): return {}
