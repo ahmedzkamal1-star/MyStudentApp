@@ -21,7 +21,7 @@ source.include_exts = py,png,jpg,kv,ttf,json
 
 # (list) List of requirements
 # Note: Minimal requirements to pass Colab build
-requirements = python3,kivy==2.3.0,kivymd==1.2.0,requests,certifi,arabic-reshaper,python-bidi
+requirements = python3,kivy==2.3.0,kivymd==1.2.0,requests,certifi,arabic-reshaper,python-bidi,six
 
 # (bool) Automatically accept SDK license agreements
 android.accept_sdk_license = True

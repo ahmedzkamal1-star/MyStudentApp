@@ -45,7 +45,7 @@ class RegisterScreen(Screen):
             orientation='vertical', size_hint_y=None, height=dp(90), spacing=dp(5)
         )
         title_box.add_widget(Label(
-            text='Student',
+            text=ar('Student'),
             font_size=dp(44),
             font_name=self.app.font_name,
             size_hint_y=None,

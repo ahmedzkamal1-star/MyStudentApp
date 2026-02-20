@@ -286,15 +286,43 @@ class AdminScreen(Screen):
     def show_upload_pdf_dialog(self, sid):
         content = BoxLayout(orientation='vertical', spacing=dp(10), padding=dp(15))
         t_i = TextInput(hint_text=ar('العنوان'), font_name=self.app.font_name, multiline=False, height=dp(42), size_hint_y=None, halign='right')
-        u_i = TextInput(hint_text=ar('الرابط'), font_name=self.app.font_name, multiline=False, height=dp(42), size_hint_y=None, halign='right')
+        u_i = TextInput(hint_text=ar('الرابط أو مسار الملف'), font_name=self.app.font_name, multiline=False, height=dp(42), size_hint_y=None, halign='right')
+        
+        def open_chooser(x):
+            from kivy.uix.filechooser import FileChooserIconView
+            f_box = BoxLayout(orientation='vertical', spacing=dp(5), padding=dp(10))
+            # تحديد المسار الافتراضي للأندرويد أو الكمبيوتر
+            default_path = '/sdcard' if self.app.platform == 'android' else '.'
+            chooser = FileChooserIconView(filters=['*.pdf'], path=default_path)
+            f_box.add_widget(chooser)
+            
+            f_popup = Popup(title=ar('اختر ملف PDF'), content=f_box, size_hint=(0.95, 0.95))
+            
+            def on_select(inst):
+                if chooser.selection:
+                    u_i.text = chooser.selection[0]
+                    # اقتراح العنوان من اسم الملف إذا كان فارغاً
+                    if not t_i.text:
+                        import os
+                        t_i.text = os.path.basename(chooser.selection[0]).replace('.pdf', '')
+                    f_popup.dismiss()
+            
+            f_box.add_widget(action_btn('تحديد الملف المختارة', C_GREEN, on_select, dp(45)))
+            f_box.add_widget(action_btn('إلغاء', C_RED, lambda x: f_popup.dismiss(), dp(40)))
+            f_popup.open()
+
         content.add_widget(t_i); content.add_widget(u_i)
-        popup = Popup(title='', content=content, size_hint=(0.85, 0.5), separator_height=0)
+        content.add_widget(action_btn('📁 اختر ملف من جهازك', C_YELLOW, open_chooser, dp(45)))
+        
+        popup = Popup(title='', content=content, size_hint=(0.85, 0.65), separator_height=0)
         def save(x):
+            if not t_i.text or not u_i.text: return
             pid = f"pdf_{int(time.time())}"
             FirebaseManager.save_pdf(pid, t_i.text, u_i.text, True)
             FirebaseManager.add_pdf_to_subject(sid, pid)
             popup.dismiss(); self._refresh_subs()
-        content.add_widget(action_btn('رفع', C_BLUE, save))
+            
+        content.add_widget(action_btn('حفظ البيانات', C_BLUE, save))
         popup.open()
 
     def _update_badge(self):

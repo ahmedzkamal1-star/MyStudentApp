@@ -10,6 +10,8 @@ from kivy.core.window import Window
 from kivy.utils import get_color_from_hex
 from kivy.metrics import dp
 import math
+from utils.arabic_utils import ar
+from kivy.app import App
 
 class AnimatedLogo(Image):
     """Custom animated logo with rotation and scaling"""
@@ -59,9 +61,10 @@ class SplashScreen(Screen):
         
         # App name with fade-in
         app_name = Label(
-            text='My Mobile App',
+            text=ar('MyStudent'),
             font_size=dp(28),
             bold=True,
+            font_name=App.get_running_app().font_name,
             color=get_color_from_hex('#2D3436'),
             size_hint=(None, None),
             size=(dp(300), dp(50)),
@@ -71,8 +74,9 @@ class SplashScreen(Screen):
         
         # Loading text with animated dots
         self.loading_text = Label(
-            text='Loading',
+            text=ar('Loading'),
             font_size=dp(16),
+            font_name=App.get_running_app().font_name,
             color=get_color_from_hex('#636E72'),
             size_hint=(None, None),
             size=(dp(200), dp(30)),
@@ -139,7 +143,7 @@ class SplashScreen(Screen):
         """Update loading dots animation"""
         self.loading_dots = (self.loading_dots + 1) % 4
         dots = '.' * self.loading_dots
-        self.loading_text.text = f'Loading{dots}'
+        self.loading_text.text = ar(f'Loading{dots}')
     
     def go_to_home(self):
         """Transition to home screen"""

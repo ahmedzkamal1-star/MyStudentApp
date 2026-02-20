@@ -13,6 +13,7 @@ from kivy.animation import Animation
 from kivy.metrics import dp
 from kivy.utils import get_color_from_hex
 from kivy.app import App
+from utils.arabic_utils import ar
 
 class AppSettingRow(BoxLayout):
     """Reusable setting item with label and control"""
@@ -37,15 +38,17 @@ class AppSettingRow(BoxLayout):
         self.icon_label = Label(
             text=setting_icon,
             font_size=dp(24),
-            size_hint_x=0.15
+            size_hint_x=0.15,
+            font_name=self.app.font_name
         )
         
         # Name
         self.name_label = Label(
-            text=setting_name,
+            text=ar(setting_name),
             font_size=dp(16),
             size_hint_x=0.5,
-            halign='left'
+            halign='right',
+            font_name=self.app.font_name
         )
         self.name_label.bind(size=self.name_label.setter('text_size'))
         
@@ -111,11 +114,12 @@ class SettingsScreen(Screen):
         back_btn.bind(on_release=lambda x: setattr(self.manager, 'current', 'home'))
         
         self.title_label = Label(
-            text='Settings',
+            text=ar('الإعدادات'),
             font_size=dp(22),
             bold=True,
             size_hint_x=0.85,
-            halign='left'
+            halign='right',
+            font_name=self.app.font_name
         )
         self.title_label.bind(size=self.title_label.setter('text_size'))
         
@@ -173,7 +177,10 @@ class SettingsScreen(Screen):
         self.items.append(lang_item)
         
         self.logout_btn = Button(
-            text='Log Out',
+            text=ar('تسجيل الخروج'),
+            font_size=dp(16),
+            bold=True,
+            font_name=self.app.font_name,
             size_hint_y=None,
             height=dp(50),
             background_normal='',
@@ -194,13 +201,14 @@ class SettingsScreen(Screen):
     def create_section_title(self, title):
         """Create a section title widget"""
         lbl = Label(
-            text=title,
+            text=ar(title),
             font_size=dp(18),
             bold=True,
             color=get_color_from_hex(self.app.primary_color),
             size_hint_y=None,
             height=dp(40),
-            halign='left'
+            halign='right',
+            font_name=self.app.font_name
         )
         lbl.bind(size=lbl.setter('text_size'))
         return lbl

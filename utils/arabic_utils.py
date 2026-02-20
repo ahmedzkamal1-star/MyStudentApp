@@ -11,9 +11,8 @@ import re
 def ar(text):
     """
     يقوم بتشكيل النص العربي وعكسه ليظهر بشكل صحيح في Kivy.
-    كما يقوم باستبدال الرموز التعبيرية (Emojis) بنصوص عربية لوضوح أكثر وتجنب المربعات xxxx.
     """
-    if not text:
+    if not text or text is None:
         return ""
     
     # تحويل النص ليكون سلسلة (string) إذا لم يكن
@@ -34,16 +33,25 @@ def ar(text):
         text = text.replace(emoji, replacement)
     
     # تنظيف أي رموز تعبيرية متبقية ليست ضمن القائمة (لمنع ظهور مربعات xxxx)
-    # نستخدم Regex لإبقاء النصوص العربية والإنجليزية والأرقام وبعض الرموز الأساسية فقط
-    text = re.sub(r'[^\u0600-\u06FF\u0750-\u077F\u08A0-\u08FFa-zA-Z0-9\s!@#$%^&*()_+\-=\[\]{};\':\"\\|,.<>\/?]+', '', text)
-
-    # تشكيل الحروف (وصل الحروف ببعضها)
+    # نستخدم Regex لإبقاء النصوص العربية (بما فيها الأرقام والتشكيل) والإنجليزية والأرقام وبعض الرموز الأساسية فقط
+    # تمت إضافة نطاقات أدق للعربية لضمان عدم حذف الحروف أثناء المعالجة
     try:
-        if HAS_ARABIC:
+        text = re.sub(r'[^\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFFa-zA-Z0-9\s!@#$%^&*()_+\-=\[\]{};\':\"\\|,.<>\/?]+', '', text)
+    except:
+        pass
+
+    # تشكيل الحروف (وصل الحروف ببعضها) ثم عكسها (BIDI)
+    if HAS_ARABIC:
+        try:
+            # استخدام إعدادات افتراضية قوية للمشكل
             reshaped_text = arabic_reshaper.reshape(text)
             bidi_text = get_display(reshaped_text)
             return bidi_text
-        else:
+        except Exception as e:
+            print(f"Arabic Reshaping Error: {e}")
             return text
-    except Exception as e:
+    else:
+        # إذا لم تكن المكتبات موجودة، نرجع النص كما هو (سيظهر حروفاً منفصلة)
+        # هذا يساعد في التشخيص لو ظهرت الحروف منفصلة رغم التعديل
+        print("Warning: arabic-reshaper or python-bidi not found!")
         return text

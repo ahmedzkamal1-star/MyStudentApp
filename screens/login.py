@@ -49,14 +49,14 @@ class LoginScreen(Screen):
 
         # ─── شعار ───
         card.add_widget(Label(
-            text='Student',
+            text=ar('Student'),
             font_size=dp(52),
             font_name=self.app.font_name,
             size_hint_y=None,
             height=dp(60)
         ))
         card.add_widget(Label(
-            text='MyStudent',
+            text=ar('MyStudent'),
             font_size=dp(28),
             bold=True,
             font_name=self.app.font_name,

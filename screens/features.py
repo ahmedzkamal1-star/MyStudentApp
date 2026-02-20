@@ -12,6 +12,7 @@ from kivy.animation import Animation
 from kivy.metrics import dp
 from kivy.utils import get_color_from_hex
 from kivy.clock import Clock
+from utils.arabic_utils import ar
 
 class FeatureDetailCard(BoxLayout):
     """Detailed feature card with progress or interactive elements"""
@@ -34,13 +35,14 @@ class FeatureDetailCard(BoxLayout):
         
         # Header with icon and title
         header = BoxLayout(size_hint_y=None, height=dp(40), spacing=dp(10))
-        self.icon_label = Label(text=icon, font_size=dp(30), size_hint_x=0.2)
+        self.icon_label = Label(text=ar(icon), font_size=dp(30), size_hint_x=0.2, font_name=self.app.font_name)
         self.title_label = Label(
-            text=title,
+            text=ar(title),
             font_size=dp(18),
             bold=True,
             size_hint_x=0.8,
-            halign='left'
+            halign='right',
+            font_name=self.app.font_name
         )
         self.title_label.bind(size=self.title_label.setter('text_size'))
         header.add_widget(self.icon_label)
@@ -48,26 +50,28 @@ class FeatureDetailCard(BoxLayout):
         
         # Description
         self.desc_label = Label(
-            text=description,
+            text=ar(description),
             font_size=dp(14),
             size_hint_y=None,
             height=dp(40),
-            halign='left'
+            halign='right',
+            font_name=self.app.font_name
         )
         self.desc_label.bind(size=self.desc_label.setter('text_size'))
         
         # Progress bar (example interactive element)
         progress_layout = BoxLayout(size_hint_y=None, height=dp(30), spacing=dp(10))
-        self.usage_label = Label(text='Usage:', size_hint_x=0.3)
+        self.usage_label = Label(text=ar('الاستخدام:'), size_hint_x=0.3, font_name=self.app.font_name)
         progress = ProgressBar(value=75, size_hint_x=0.7, max=100)
         progress_layout.add_widget(self.usage_label)
         progress_layout.add_widget(progress)
         
         # Action button
         self.action_btn = Button(
-            text='Learn More',
+            text=ar('معرفة المزيد'),
             size_hint_y=None,
             height=dp(40),
+            font_name=self.app.font_name,
             background_normal='',
             background_color=get_color_from_hex(self.app.primary_color),
             color=(1, 1, 1, 1)
@@ -138,11 +142,12 @@ class FeaturesScreen(Screen):
         back_btn.bind(on_release=lambda x: setattr(self.manager, 'current', 'home'))
         
         self.title_label = Label(
-            text='All Features',
+            text=ar('مميزات المنصة'),
             font_size=dp(22),
             bold=True,
             size_hint_x=0.85,
-            halign='left'
+            halign='right',
+            font_name=self.app.font_name
         )
         self.title_label.bind(size=self.title_label.setter('text_size'))
         
