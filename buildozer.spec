@@ -20,8 +20,11 @@ source.dir = .
 source.include_exts = py,png,jpg,kv,ttf,json
 
 # (list) List of requirements
-# Note: we need openssl for HTTPS (Firebase) and arabic-reshaper/python-bidi for Arabic
-requirements = python3,kivy==2.3.0,kivymd==1.2.0,pillow,requests,urllib3,certifi,openssl,arabic-reshaper,python-bidi
+# Note: Minimal requirements to pass Colab build
+requirements = python3,kivy==2.3.0,kivymd==1.2.0,requests,certifi,arabic-reshaper,python-bidi
+
+# (bool) Automatically accept SDK license agreements
+android.accept_sdk_license = True
 
 # (str) Custom source folders for requirements
 # (list) Permissions
