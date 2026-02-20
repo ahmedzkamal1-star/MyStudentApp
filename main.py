@@ -102,7 +102,7 @@ class MainApp(App):
         if HAS_KIVYMD:
             self.theme_manager = ThemeManager()
         self.title = 'MyStudent'
-        self.icon = 'assets/icon.png'
+        # self.icon = 'assets/icon.png'  # مؤقتاً معطل - الملف غير موجود
         # self.register_fonts() # تم التسجيل في الأعلى
         self.load_theme_preference()
         

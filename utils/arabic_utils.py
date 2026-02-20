@@ -1,7 +1,12 @@
 # utils/arabic_utils.py - النسخة المطورة لمعالجة النصوص والعربية والرموز
-import arabic_reshaper
-from bidi.algorithm import get_display
+try:
+    import arabic_reshaper
+    from bidi.algorithm import get_display
+    HAS_ARABIC = True
+except ImportError:
+    HAS_ARABIC = False
 import re
+
 
 def ar(text):
     """
@@ -34,8 +39,11 @@ def ar(text):
 
     # تشكيل الحروف (وصل الحروف ببعضها)
     try:
-        reshaped_text = arabic_reshaper.reshape(text)
-        bidi_text = get_display(reshaped_text)
-        return bidi_text
+        if HAS_ARABIC:
+            reshaped_text = arabic_reshaper.reshape(text)
+            bidi_text = get_display(reshaped_text)
+            return bidi_text
+        else:
+            return text
     except Exception as e:
         return text
